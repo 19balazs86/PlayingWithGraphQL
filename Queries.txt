@@ -1,0 +1,69 @@
+# Skip and take parameters are optional. Try to set the skip parameter less than 0. 
+
+query
+{
+  orders(skip: 0, take: 5)
+  {
+    id,
+    userId,
+    price,
+    date,
+    note
+  }
+}
+
+query
+{
+  users
+  {
+    id,
+    name,
+    company,
+    email,
+    registered,
+    orders
+    {
+      price,
+      date
+    }
+  }
+}
+
+query
+{
+  user(id: 1)
+  {
+    id,
+    name,
+    orders
+    {
+      price,
+      date
+    }
+  }
+}
+
+# Create new user.
+
+mutation($user: MyUserInputType!)
+{
+  addUser(user: $user)
+  {
+    id,
+    name,
+    registered
+  }
+}
+
+# Variable to create new user.
+# Fielad name 'user' = $user: MyUserInputType! in the mutation definition.
+
+{
+  "user":
+  {
+    "name": "TestAdd",
+    "age": 25,
+    "company": "Test company",
+    "email": "email@domain.com"
+  }
+}

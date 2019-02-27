@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using PlayingWithGraphQL.DataBase;
 
 namespace PlayingWithGraphQL
 {
@@ -14,11 +9,27 @@ namespace PlayingWithGraphQL
   {
     public static void Main(string[] args)
     {
-      CreateWebHostBuilder(args).Build().Run();
+      CreateWebHostBuilder(args).Build().SeedData().Run();
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>();
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+      => WebHost
+          .CreateDefaultBuilder(args)
+          .UseStartup<Startup>();
+  }
+
+  public static class WebHostExtensions
+  {
+    public static IWebHost SeedData(this IWebHost host)
+    {
+      using (IServiceScope scope = host.Services.CreateScope())
+      {
+        DataBaseContext dbContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+
+        dbContext.SeedData();
+      }
+
+      return host;
+    }
   }
 }
