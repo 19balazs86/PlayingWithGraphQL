@@ -13,6 +13,7 @@ You can find some definitions for query and mutatation type in the example. Quer
 - Medium: [Setup a GraphQL API using ASP.NET Core](https://medium.com/shemseddine-on-code/setup-a-graphql-api-using-asp-net-core-79f1b88f6ad8 "Setup a GraphQL API using ASP.NET Core").
 - YouTube - Max playlist - [Build a Complete App with GraphQL, Node.js, MongoDB and React.js](https://www.youtube.com/watch?v=7giZGFDGnkc&list=PL55RiY5tL51rG1x02Yyj93iypUuHYXcB_ "Build a Complete App with GraphQL, Node.js, MongoDB and React.js").
 - Custom middleware in the [graphql-dotnet/GraphQL.Harness](https://github.com/graphql-dotnet/graphql-dotnet/tree/master/src/GraphQL.Harness "graphql-dotnet/GraphQL.Harness") repository.
+- [Visual GraphQL editor](https://graphqleditor.com "Visual GraphQL editor").
 
 #### Sandbox
 Sandbox to run queries within the browser and view API documentation.
