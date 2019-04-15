@@ -8,6 +8,7 @@ You can find some definitions for query and mutatation type in the example. Quer
 - [Documentation](https://graphql-dotnet.github.io/docs/getting-started/introduction "Documentation") for GraphQL for .NET.
 - [GitHub](https://github.com/graphql-dotnet/graphql-dotnet "GitHub") for GraphQL for .NET.
 - [How to GraphQL](https://www.howtographql.com "How to GraphQL") - The Fullstack Tutorial for GraphQL.
+- Code Maze has a comprehensive series: [GraphQL ASP.NET Core Tutorial](https://code-maze.com/graphql-asp-net-core-tutorial/ "GraphQL ASP.NET Core Tutorial").
 - C# Corner: [GraphQL In .NET Core with EF - Part 1](https://www.c-sharpcorner.com/article/graphql-in-net-core-web-api-with-entity-framework-core-part-one "GraphQL In .NET Core with EF - Part 1").
 - C# Corner: [GraphQL In .NET Core with EF - Part 2](https://www.c-sharpcorner.com/article/graphql-in-net-core-web-api-with-entity-framework-core-part-two "GraphQL In .NET Core with EF - Part 2") (GraphQLClient).
 - Medium: [Setup a GraphQL API using ASP.NET Core](https://medium.com/shemseddine-on-code/setup-a-graphql-api-using-asp-net-core-79f1b88f6ad8 "Setup a GraphQL API using ASP.NET Core").
