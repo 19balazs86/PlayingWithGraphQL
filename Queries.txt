@@ -18,6 +18,7 @@ query
   {
     id,
     name,
+	gender,
     company,
     email,
     registered,

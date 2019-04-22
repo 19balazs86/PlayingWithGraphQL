@@ -13,6 +13,7 @@ namespace PlayingWithGraphQL.GraphQL
       Field(x => x.Id);
       Field(x => x.Name);
       Field(x => x.Age);
+      Field<GenderEnumType>("Gender");
       Field(x => x.Company);
       Field(x => x.Email);
       Field(x => x.Registered);
