@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PlayingWithGraphQL.DataBase;
 
 namespace PlayingWithGraphQL
@@ -9,25 +9,30 @@ namespace PlayingWithGraphQL
   {
     public static void Main(string[] args)
     {
-      CreateWebHostBuilder(args).Build().SeedData().Run();
+      CreateHostBuilder(args).Build().SeedData().Run();
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-      => WebHost
-          .CreateDefaultBuilder(args)
-          .UseStartup<Startup>();
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+      return Host
+        .CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webHostBuilder =>
+          webHostBuilder
+            .UseStartup<Startup>()
+            .ConfigureKestrel(options => options.AllowSynchronousIO = true));
+            // TODO: Check. Because of the GraphQL. Their plan is to use the System.Text.Json to allow it async.
+    }
   }
 
   public static class WebHostExtensions
   {
-    public static IWebHost SeedData(this IWebHost host)
+    public static IHost SeedData(this IHost host)
     {
-      using (IServiceScope scope = host.Services.CreateScope())
-      {
-        DataBaseContext dbContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+      using IServiceScope scope = host.Services.CreateScope();
 
-        dbContext.SeedData();
-      }
+      DataBaseContext dbContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+
+      dbContext.SeedData();
 
       return host;
     }

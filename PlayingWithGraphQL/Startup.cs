@@ -3,10 +3,10 @@ using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PlayingWithGraphQL.DataBase;
 using PlayingWithGraphQL.GraphQL;
 
@@ -23,7 +23,7 @@ namespace PlayingWithGraphQL
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      //services.AddControllers();
 
       // --> EF: Use in-memory database.
       services.AddDbContext<DataBaseContext>(options => options.UseInMemoryDatabase("dbName"));
@@ -38,16 +38,18 @@ namespace PlayingWithGraphQL
         .AddGraphTypes(ServiceLifetime.Scoped);
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
         app.UseDeveloperExceptionPage();
+
+      //app.UseRouting();
 
       // --> GraphQL
       app.UseGraphQL<DefinitionSchema>(); // Default path: /graphql
       app.UseGraphQLPlayground(new GraphQLPlaygroundOptions()); // http://localhost:5000/ui/playground
 
-      app.UseMvc();
+      //app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
   }
 }
