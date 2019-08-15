@@ -2,7 +2,7 @@
 
 This is a small .NET Core application, a playground to try out GraphQL. The example just gives you a subtle insight into GraphQL.
 
-You can find some definitions for query and mutation type in the example. Queries.txt constants all queries, which you can try in the playground.
+You can find some definitions for query and mutation type in the example. postman_collection.json constants all queries, which you can try in the playground and in Postman.
 
 #### Resources
 - [Documentation](https://graphql-dotnet.github.io/docs/getting-started/introduction) for GraphQL for .NET.
