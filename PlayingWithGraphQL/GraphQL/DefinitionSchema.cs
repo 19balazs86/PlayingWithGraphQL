@@ -1,14 +1,15 @@
-﻿using GraphQL;
+﻿using System;
 using GraphQL.Types;
+using GraphQL.Utilities;
 
 namespace PlayingWithGraphQL.GraphQL
 {
   public class DefinitionSchema : Schema
   {
-    public DefinitionSchema(IDependencyResolver resolver) : base(resolver)
+    public DefinitionSchema(IServiceProvider provider) : base(provider)
     {
-      Query    = resolver.Resolve<DefinitionQuery>();
-      Mutation = resolver.Resolve<DefinitionMutation>();
+      Query    = provider.GetRequiredService<DefinitionQuery>();
+      Mutation = provider.GetRequiredService<DefinitionMutation>();
     }
   }
 }

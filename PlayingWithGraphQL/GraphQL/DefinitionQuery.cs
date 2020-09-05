@@ -39,7 +39,7 @@ namespace PlayingWithGraphQL.GraphQL
           .FirstOrDefaultAsync(u => u.Id == context.GetArgument<int>("id", 0)));
     }
 
-    private async Task<object> resolveOrders(ResolveFieldContext<object> context)
+    private async Task<object> resolveOrders(IResolveFieldContext<object> context)
     {
       try
       {

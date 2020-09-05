@@ -29,11 +29,18 @@ public void ConfigureServices(IServiceCollection services)
 {
   // --> GraphQL
   services
-    .AddScoped<IDependencyResolver>(sp => new FuncDependencyResolver(sp.GetRequiredService))
-    .AddScoped<DefinitionSchema>();
+    .AddScoped<DefinitionSchema>()
+    .AddSingleton<IDocumentExecuter, DocumentExecuter>()
+    .AddSingleton<IDocumentWriter, DocumentWriter>();
 
   // Add all GraphQL types (ObjectGraphType, InputObjectGraphType, ObjectGraphType<X>).
-  services.AddGraphQL(options => options.ExposeExceptions = false)
+  services
+    .AddGraphQL(options =>
+    {
+      options.ExposeExceptions = false;
+      options.EnableMetrics    = false;
+    })
+    .AddNewtonsoftJson()
     .AddGraphTypes(ServiceLifetime.Scoped);
 }
 

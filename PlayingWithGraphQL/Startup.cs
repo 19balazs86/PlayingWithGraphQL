@@ -1,4 +1,5 @@
 ﻿using GraphQL;
+using GraphQL.NewtonsoftJson;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
@@ -30,11 +31,19 @@ namespace PlayingWithGraphQL
 
       // --> GraphQL
       services
-        .AddScoped<IDependencyResolver>(sp => new FuncDependencyResolver(sp.GetRequiredService))
-        .AddScoped<DefinitionSchema>();
+        //.AddScoped<IServiceProvider>(sp => new FuncServiceProvider(sp.GetRequiredService))
+        .AddScoped<DefinitionSchema>()
+        .AddSingleton<IDocumentExecuter, DocumentExecuter>()
+        .AddSingleton<IDocumentWriter, DocumentWriter>();
 
       // Add all GraphQL types (ObjectGraphType, InputObjectGraphType, ObjectGraphType<X>).
-      services.AddGraphQL(options => options.ExposeExceptions = false)
+      services
+        .AddGraphQL(options =>
+        {
+          options.ExposeExceptions = false;
+          options.EnableMetrics    = false; // True: Metrics appears in the response
+        })
+        .AddNewtonsoftJson()
         .AddGraphTypes(ServiceLifetime.Scoped);
     }
 

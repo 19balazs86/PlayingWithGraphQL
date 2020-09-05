@@ -1,4 +1,5 @@
 ﻿using System;
+using GraphQL;
 using GraphQL.Types;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using PlayingWithGraphQL.DataBase;
