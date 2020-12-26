@@ -13,7 +13,7 @@ using PlayingWithGraphQL.GraphQL;
 
 namespace PlayingWithGraphQL
 {
-  public class Startup
+    public class Startup
   {
     public IConfiguration Configuration { get; }
 
@@ -40,8 +40,7 @@ namespace PlayingWithGraphQL
       services
         .AddGraphQL(options =>
         {
-          options.ExposeExceptions = false;
-          options.EnableMetrics    = false; // True: Metrics appears in the response
+          options.EnableMetrics = false; // True: Metrics appears in the response
         })
         .AddNewtonsoftJson()
         .AddGraphTypes(ServiceLifetime.Scoped);
