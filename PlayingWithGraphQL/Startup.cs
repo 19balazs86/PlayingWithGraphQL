@@ -13,7 +13,7 @@ using PlayingWithGraphQL.GraphQL;
 
 namespace PlayingWithGraphQL
 {
-    public class Startup
+  public class Startup
   {
     public IConfiguration Configuration { get; }
 
@@ -55,7 +55,7 @@ namespace PlayingWithGraphQL
 
       // --> GraphQL
       app.UseGraphQL<DefinitionSchema>(); // Default path: /graphql
-      app.UseGraphQLPlayground(new GraphQLPlaygroundOptions()); // http://localhost:5000/ui/playground
+      app.UseGraphQLPlayground(new PlaygroundOptions()); // http://localhost:5000/ui/playground
 
       //app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
