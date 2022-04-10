@@ -1,0 +1,53 @@
+﻿<ItemGroup>
+  <PackageReference Include="Bogus" Version="34.0.2" />
+  <PackageReference Include="GraphQL" Version="5.1.0" />
+  <PackageReference Include="GraphQL.MicrosoftDI" Version="5.1.0" />
+  <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.2.1" />
+  <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.1" />
+  <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.2.1" />
+  <PackageReference Include="GraphQL.SystemTextJson" Version="5.1.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
+</ItemGroup>
+
+
+using GraphQL;
+using GraphQL.Execution;
+using GraphQL.SystemTextJson;
+using GraphQLParser.AST;
+using Microsoft.EntityFrameworkCore;
+using PlayingWithGraphQL;
+using PlayingWithGraphQL.DataBase;
+using PlayingWithGraphQL.GraphQL;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+// ----> ConfigureServices <----
+IServiceCollection services = builder.Services;
+
+// --> EF: Use in-memory database.
+services.AddDbContext<DataBaseContext>(options => options.UseInMemoryDatabase("dbName"));
+
+//services.AddScoped<ISchema, DefinitionSchema>(services => new DefinitionSchema(new SelfActivatingServiceProvider(services)));
+
+GraphQL.MicrosoftDI.GraphQLBuilderExtensions.AddGraphQL(services, builder =>
+{
+  builder
+    .AddSystemTextJson()
+    .AddSchema<DefinitionSchema>()
+    .AddExecutionStrategy<SerialExecutionStrategy>(OperationType.Query);
+});
+
+
+// ----> Configure <----
+WebApplication app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+  app.UseDeveloperExceptionPage();
+
+app.UseGraphQL<DefinitionSchema>();
+
+//app.UseGraphQLPlayground(new PlaygroundOptions()); // http://localhost:5000/ui/playground
+
+app.SeedData().Run();

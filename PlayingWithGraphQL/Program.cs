@@ -1,40 +1,41 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.SystemTextJson;
+using GraphQL.Types;
+using Microsoft.EntityFrameworkCore;
 using PlayingWithGraphQL.DataBase;
+using PlayingWithGraphQL.GraphQL;
 
-namespace PlayingWithGraphQL
-{
-  public class Program
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+// ----> ConfigureServices <----
+IServiceCollection services = builder.Services;
+
+// --> EF: Use in-memory database.
+services.AddDbContext<DataBaseContext>(options => options.UseInMemoryDatabase("dbName"));
+
+services.AddScoped<ISchema, DefinitionSchema>();
+
+builder.Services
+  .AddGraphQL(options =>
   {
-    public static void Main(string[] args)
-    {
-      CreateHostBuilder(args).Build().SeedData().Run();
-    }
+    options.EnableMetrics = true;
+  })
+  .AddSystemTextJson()
+  .AddGraphTypes(ServiceLifetime.Scoped);
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-      return Host
-        .CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webHostBuilder =>
-          webHostBuilder
-            .UseStartup<Startup>()
-            .ConfigureKestrel(options => options.AllowSynchronousIO = true));
-            // TODO: Check. Because of the GraphQL. Their plan is to use the System.Text.Json to allow it async.
-    }
-  }
 
-  public static class WebHostExtensions
-  {
-    public static IHost SeedData(this IHost host)
-    {
-      using IServiceScope scope = host.Services.CreateScope();
+// ----> Configure <----
+WebApplication app = builder.Build();
 
-      DataBaseContext dbContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+  app.UseDeveloperExceptionPage();
 
-      dbContext.SeedData();
+//app.MapControllers();
 
-      return host;
-    }
-  }
-}
+app.UseGraphQL<ISchema>();
+
+app.UseGraphQLPlayground(new PlaygroundOptions()); // http://localhost:5000/ui/playground
+
+app.SeedData().Run();

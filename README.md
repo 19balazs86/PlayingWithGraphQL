@@ -20,34 +20,8 @@ Sandbox to run queries within the browser and view API documentation.
 - [GraphQL Playground](https://github.com/prisma/graphql-playground).
 - [GraphiQL](https://github.com/graphql/graphiql).
 
-#### Startup.cs
+#### Other resources
 
-A basic setup in the Startup.cs file.
+Dev.to - Series: [Getting started with GraphQL in .NET 6](https://dev.to/berviantoleo/series/15056) *(Bervianto Leo Pratama, 2021 October-November)*
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-  // --> GraphQL
-  services
-    .AddScoped<DefinitionSchema>()
-    .AddSingleton<IDocumentExecuter, DocumentExecuter>()
-    .AddSingleton<IDocumentWriter, DocumentWriter>();
-
-  // Add all GraphQL types (ObjectGraphType, InputObjectGraphType, ObjectGraphType<X>).
-  services
-    .AddGraphQL(options =>
-    {
-      options.ExposeExceptions = false;
-      options.EnableMetrics    = false;
-    })
-    .AddNewtonsoftJson()
-    .AddGraphTypes(ServiceLifetime.Scoped);
-}
-
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-  // --> GraphQL
-  app.UseGraphQL<DefinitionSchema>(); // Default path: /graphql
-  app.UseGraphQLPlayground(new GraphQLPlaygroundOptions()); // http://localhost:5000/ui/playground
-}
-```
+ChilliCream - [Hot Chocolate](https://chillicream.com/docs/hotchocolate) *(The Ultimate GraphQL Platform)*

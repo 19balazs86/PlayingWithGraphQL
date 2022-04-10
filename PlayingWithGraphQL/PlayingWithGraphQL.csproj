@@ -7,11 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Program_OLD.cs" />
+    <Compile Remove="Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Program_OLD.cs" />
+    <None Include="Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="GraphQL" Version="4.7.1" />
+    <PackageReference Include="GraphQL" Version="4.8.0" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.2.1" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.NewtonsoftJson" Version="5.2.1" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.1" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.2.1" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="4.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
   </ItemGroup>
